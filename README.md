@@ -1,26 +1,64 @@
-# Vue 3 + Typescript + Vite
+# Bitcoin Converter written in Vue.js 3 TypeScript
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+Based on this blog post:
 
-## Recommended IDE Setup
+[Vue.js; AngularJS done right!](https://juur.link/2019/01/vue-js-angularjs-done-right)
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+Todo: Create new blog post.
 
-### If Using `<script setup>`
+The following tools/frameworks are used:
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
+* **Vue.js** - frontend framework
+* **Bootstrap** - for styling
+* **Axios** - HTTP client
 
-## Type Support For `.vue` Imports in TS
+## Getting Started
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
+The source code is hosted at [GitHub](https://github.com/kozmoz/bitcoinconverter-vue3).
 
-### If Using Volar
+The following Git command wil clone the project and download the sources to the local machine.
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+```
+$ git clone https://github.com/kozmoz/bitcoinconverter-vue3.git 
+```
 
-### If Using Vetur
+### Prerequisites
 
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette 5. Search and run "Select TypeScript version" -> "Use workspace version"
+The only requirements are `node` and `npm`.
+
+### Installing
+
+To get the required dependencies, issue the following npm command:
+
+```
+$ npm install
+```
+
+Now start serving the app and open the following URL in the browser:
+[http://localhost:3000/](http://localhost:3000/)
+
+```
+$ npm run dev
+```
+
+## Built With
+
+* [Vue.js](https://vuejs.org) 3.9 - The Progressive JavaScript Framework
+* [Vue I18n](https://kazupon.github.io/vue-i18n/) 9.0 - Vue I18n is internationalization plugin for Vue.js
+* [Vue Vite](https://github.com/vitejs/vite/blob/main/docs/guide/index.md) 1.1 - Build tool that aims to provide a faster and leaner development experience
+* [Bootstrap](https://getbootstrap.com) 4.6 – Responsive, mobile-first front-end component library
+* [Axios](https://github.com/axios/axios) 0.21 - Promise based HTTP client for the browser and node.js
+* [Coindesk API](https://www.coindesk.com/api) - CoinDesk Bitcoin Price Index API
+
+All variants of this Bitcoin converter application, sorted from new to old:
+
+* Vue.js - part 2 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right-part-2/) [src](https://github.com/kozmoz/bitcoinconverter-vue) [demo](http://sandbox.juurlink.org/vuejs-part-2/)
+* Vue.js - part 1 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right/) [src](https://github.com/kozmoz/bitcoinconverter-vue/tree/without-single-file-components) [demo](http://sandbox.juurlink.org/vuejs/)
+* Angular Bitcoin converter application [blog] [src](https://github.com/kozmoz/bitcoinconverter-angular2) [demo](http://sandbox.juurlink.org/angularjs2/)
+* AngularJS Bitcoin converter application [blog](https://juur.link/2013/05/angularjs/) [src](https://github.com/kozmoz/bitcoinconverter-angular1) [demo](http://sandbox.juurlink.org/angularjs/)
+* Backbone Bitcoin converter application [blog](https://juur.link/2013/10/backbone-js-introductie/) [src](https://github.com/kozmoz/bitcoinconverter-backbone) [demo](http://sandbox.juurlink.org/backbone/)
+
+---
+
+This README.md is based on a template from:
+https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
