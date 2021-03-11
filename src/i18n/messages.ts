@@ -3,6 +3,7 @@ export default {
     message: {
       EUR_label: 'Euro',
       USD_label: 'Dollar',
+      BTC_label: 'BTC',
       EUR_sign: '€',
       USD_sign: '$',
       BTC_sign: '฿',
@@ -25,11 +26,12 @@ export default {
     message: {
       EUR_label: 'Euro',
       USD_label: 'Dollar',
+      BTC_label: 'BTC',
       EUR_sign: '€',
       USD_sign: '$',
       BTC_sign: '฿',
-      TOBTC_label: 'Zet {currency} om naar Bitcoin',
-      FROMBTC_label: 'Zet Bitcoin om naar {currency}',
+      TO_BTC_label: 'Zet {currency} om naar Bitcoin',
+      FROM_BTC_label: 'Zet Bitcoin om naar {currency}',
       nl: 'Nederlands',
       en: 'English',
       error_ECONNABORTED: 'Timeout bij verbinden met ticker service',

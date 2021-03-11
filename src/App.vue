@@ -2,8 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col converter-block-title text-center text-white">
+        <div class="float-right pt-2">
+          <select-language/>
+        </div>
         <h2>{{ title }}</h2>
-        <select-language/>
       </div>
     </div>
 
@@ -14,7 +16,8 @@
           <!-- Reusable components, not dependent on data store. -->
           <select-currency v-model:currency="currency"/>
           <select-conversion-direction v-model:direction="direction" :currency="currency"/>
-          <input-amount v-model="amount" :currency="currencyForInput" :direction="direction" class="mb-0"></input-amount>
+          <input-amount v-model="amount" :currency="currencyForInput" :direction="direction"
+                        class="mb-0"></input-amount>
 
         </form>
       </div>
@@ -93,6 +96,7 @@ export default defineComponent({
 </script>
 
 
+<!-- Global styling. -->
 <style>
 
 body {
