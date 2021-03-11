@@ -14,7 +14,7 @@
           <!-- Reusable components, not dependent on data store. -->
           <select-currency v-model:currency="currency"/>
           <select-conversion-direction v-model:direction="direction" :currency="currency"/>
-          <input-amount v-model:amount="amount" :currency="currency" class="mb-0"></input-amount>
+          <input-amount v-model="amount" :currency="currencyForInput" :direction="direction" class="mb-0"></input-amount>
 
         </form>
       </div>
@@ -45,14 +45,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from '@vue/runtime-core'
+import {computed, defineComponent, ref} from '@vue/runtime-core'
 import ConversionResult from './components/ConversionResult.vue';
 import InputAmount from './components/InputAmount.vue';
 import SelectConversionDirection from './components/SelectConversionDirection.vue';
 import SelectCurrency from './components/SelectCurrency.vue';
 import SelectLanguage from './components/SelectLanguage.vue';
 import {CONVERT_DIR, CURRENCY} from './domain/enums';
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default defineComponent({
   components: {
@@ -69,11 +69,23 @@ export default defineComponent({
     const direction = ref(CONVERT_DIR.FROM_BTC);
     const amount = ref(1);
 
+    /**
+     * Determine if we have to show 'USD', 'EUR' or 'BTC'.
+     */
+    const currencyForInput = computed<string>(() => {
+      if (direction.value === CONVERT_DIR.FROM_BTC) {
+        return CURRENCY.BTC;
+      } else {
+        return currency.value;
+      }
+    });
+
     return {
-      title: 'process.env.VUE_APP_TITLE',
+      title: import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED',
       currency,
       direction,
       amount,
+      currencyForInput,
       errors: [] /* todo */
     }
   }

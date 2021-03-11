@@ -1,6 +1,7 @@
 export enum CURRENCY {
     EUR = 'EUR',
     USD = 'USD',
+    BTC = 'BTC'
 }
 
 export enum CONVERT_DIR {

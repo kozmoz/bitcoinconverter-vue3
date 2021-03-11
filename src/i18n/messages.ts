@@ -18,7 +18,7 @@ export default {
       amount: 'Amount',
       amount_error: 'Only numbers are allowed',
       form_error: 'Verify that everything is filled out correctly',
-      'inputamount-formtext-integer': 'The amount is an integer'
+      'inputamount-formtext-integer': 'The amount should be an integer'
     }
   },
   nl: {

@@ -45,27 +45,27 @@ export default defineComponent({
       /** Test if the enum value is valid. */
       validator: v => !!CURRENCY[v]
     },
-    amount: {
+    modelValue: {
       type: Number,
       required: true
     }
   },
 
   emits: [
-    'update:amount'
+    'update:modelValue'
   ],
 
   setup(props) {
 
     // For internal use. Contains the exact contents of the input field.
-    const model = ref(`${props.amount}`);
+    const model = ref(`${props.modelValue}`);
 
     /**
      * Convert amount to number/0 and emit an update event.
      * @param value Input element value to update
      */
     function updateAmount(value: string): void {
-      this.$emit('update:amount', isNumeric(value) || 0);
+      this.$emit('update:modelValue', isNumeric(value) || 0);
     }
 
     /**
