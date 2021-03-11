@@ -1,9 +1,5 @@
 # Bitcoin Converter written in Vue.js 3 TypeScript
 
-Based on this blog post:
-
-[Vue.js; AngularJS done right!](https://juur.link/2019/01/vue-js-angularjs-done-right)
-
 Todo: Create new blog post.
 
 The following tools/frameworks are used:
