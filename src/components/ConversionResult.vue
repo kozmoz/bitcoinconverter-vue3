@@ -1,36 +1,36 @@
 <template>
+  <div class="converter-block-result bg-white text-center px-3 py-3 my-3">
+    <div v-if="tickerPrice">
+      <h3>
+        <template v-if="direction === CONVERT_DIR.TO_BTC">
+          {{ i18n.t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5) }} BTC
+        </template>
+        <template v-else>
+          {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2) }}
+          {{ i18n.t(`message.${currency}_sign`) }}
+        </template>
+      </h3>
+      <p class="mb-0">
+        <small class="text-muted">{{ i18n.t('message.rate_updated') }}</small>
+      </p>
+      <p class="mb-0">
+        <small class="text-muted">
+          {{ i18n.t('message.rate_update_time') }}
+          {{ timeFilter(tickerPrice.updated) }}, 1 BTC =
+          {{ i18n.t(`message.${currency}_sign`) }}
+          {{ roundFilter(tickerPrice[`rate${currency}`], 2) }} (buy)
+        </small>
+      </p>
+    </div>
 
-  <div v-if="tickerPrice">
-    <h3>
-      <template v-if="direction === CONVERT_DIR.TO_BTC">
-        {{ t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5) }} BTC
-      </template>
-      <template v-else>
-        {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2) }}
-        {{ t(`message.${currency}_sign`) }}
-      </template>
-    </h3>
-    <p class="mb-0">
-      <small class="text-muted">{{ t('message.rate_updated') }}</small>
-    </p>
-    <p class="mb-0">
-      <small class="text-muted">
-        {{ t('message.rate_update_time') }}
-        {{ timeFilter(tickerPrice.updated) }}, 1 BTC =
-        {{ t(`message.${currency}_sign`) }}
-        {{ roundFilter(tickerPrice[`rate${currency}`], 2) }} (buy)
-      </small>
-    </p>
+    <div v-if="loadingStatus === LOADING_STATUS.LOADING">
+      Loading/updating exchange rates...
+    </div>
+
+    <div v-if="loadingError" class="alert alert-danger mb-0" role="alert">
+      {{ loadingError }}
+    </div>
   </div>
-
-  <div v-if="loadingStatus === LOADING_STATUS.LOADING">
-    Loading/updating exchange rates...
-  </div>
-
-  <div v-if="loadingError" class="alert alert-danger mb-0" role="alert">
-    {{ loadingError }}
-  </div>
-
 </template>
 
 <script lang="ts">
@@ -78,10 +78,11 @@ export default defineComponent({
     /**
      * Load the ticker prices.
      */
-    async function loadPrices() {
+    async function loadPrices(): void {
       loadingStatus.value = LOADING_STATUS.LOADING;
       try {
         tickerPrice.value = await TickerService.loadTickerPrice() as TickerPrice;
+        loadingError.value = '';
         loadingStatus.value = LOADING_STATUS.NOT_LOADING;
       } catch (error) {
         loadingError.value = error;
@@ -89,7 +90,10 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
+    /**
+     * Update the BTC price on interval.
+     */
+    onMounted((): void => {
       loadPrices();
       const cancelId = setInterval(loadPrices, 60000 /* One minute. */);
       onUnmounted(() => clearInterval(cancelId));
@@ -102,7 +106,6 @@ export default defineComponent({
       if (!props.amount || !tickerPrice || !tickerPrice.value) {
         return 0;
       }
-
       const price = tickerPrice.value as TickerPrice;
       if (props.direction === CONVERT_DIR.FROM_BTC) {
         return props.currency === CURRENCY.EUR ? props.amount * price.rateEUR : props.amount * price.rateUSD;
@@ -111,7 +114,7 @@ export default defineComponent({
     });
 
     return {
-      t:useI18n().t,
+      i18n: useI18n(),
       loadingStatus,
       loadingError,
       tickerPrice,
@@ -121,7 +124,6 @@ export default defineComponent({
       roundFilter,
       // Enums.
       CONVERT_DIR,
-      CURRENCY,
       LOADING_STATUS
     }
   }
@@ -132,10 +134,6 @@ export default defineComponent({
 <!-- Add "scoped" atribute to limit CSS to this component only -->
 <!--suppress CssInvalidHtmlTagReference -->
 <style scoped>
-
-h3 {
-  margin: 40px 0 0;
-}
 
 ul {
   list-style-type: none;

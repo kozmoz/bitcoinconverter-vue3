@@ -1,18 +1,17 @@
 <template>
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label" for="amount">{{ t('message.amount') }}</label>
+    <label class="col-sm-3 col-form-label" for="amount">{{ i18n.t('message.amount') }}</label>
     <div class="col-sm-9">
       <div class="input-group w-75">
         <div class="input-group-prepend">
-          <span class="input-group-text">{{ t(`message.${currency}_sign`) }}</span>
+          <span class="input-group-text">{{ i18n.t(`message.${currency}_sign`) }}</span>
         </div>
 
         <!--suppress JSUnresolvedVariable -->
         <input
             id="amount"
-            name="amount"
             type="text"
-            v-model="model"
+            v-model="modelValue"
             maxlength="10"
             class="form-control"
             :class="{ 'is-invalid': isInvalid}"
@@ -20,10 +19,10 @@
         />
 
         <div v-if="isInvalid" class="invalid-feedback">
-          {{ t('message.amount_error') }}
+          {{ i18n.t('message.amount_error') }}
         </div>
       </div>
-      <small class="form-text text-muted">{{ t('message.inputamount-formtext-integer') }}</small>
+      <small class="form-text text-muted">{{ i18n.t('message.inputamount-formtext-integer') }}</small>
     </div>
   </div>
 </template>
@@ -50,15 +49,11 @@ export default defineComponent({
       required: true
     }
   },
-
-  emits: [
-    'update:modelValue'
-  ],
-
+  emits: ['update:modelValue'],
   setup(props) {
 
     // For internal use. Contains the exact contents of the input field.
-    const model = ref(`${props.modelValue}`);
+    const modelValue = ref(`${props.modelValue}`);
 
     /**
      * Convert amount to number/0 and emit an update event.
@@ -77,13 +72,16 @@ export default defineComponent({
       return /^[0-9]+$/.test(value) ? parseInt(value, 10) : 0;
     }
 
-    const isInvalid: ComputedRef<boolean> = computed(() => !!(model.value && !isNumeric(model.value)));
+    /**
+     * Test if given value is valid.
+     */
+    const isInvalid: ComputedRef<boolean> = computed(() => !!(modelValue.value && !isNumeric(modelValue.value)));
 
     return {
-      t: useI18n().t,
-      model,
-      updateAmount,
-      isInvalid
+      i18n: useI18n(),
+      modelValue,
+      isInvalid,
+      updateAmount
     }
   }
 });

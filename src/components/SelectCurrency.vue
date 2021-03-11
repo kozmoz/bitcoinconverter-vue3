@@ -1,12 +1,12 @@
 <template>
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label" for="currencyField">{{ t('message.currency') }}</label>
+    <label class="col-sm-3 col-form-label" for="currencyField">{{ i18n.t('message.currency') }}</label>
     <div class="col-sm-9">
-      <select id="currencyField" :value="currency" class="form-control" name="currencyField"
-              @change="$emit('update:currency', $event.target.value)">
-        <option v-for="currency in currencies" :key="currency" :value="currency">
-          {{ t(`message.${currency}_label`) }}
-          {{ t(`message.${currency}_sign`) }}
+      <select id="currencyField" :value="modelValue" class="form-control"
+              @change="$emit('update:modelValue', $event.target.value)">
+        <option v-for="c in currencies" :key="c" :value="c">
+          {{ i18n.t(`message.${c}_label`) }}
+          {{ i18n.t(`message.${c}_sign`) }}
         </option>
       </select>
     </div>
@@ -18,22 +18,24 @@ import {defineComponent} from '@vue/runtime-core';
 import {CURRENCY} from '../domain/enums';
 import {useI18n} from 'vue-i18n';
 
+const CURRENCIES = [CURRENCY.EUR, CURRENCY.USD];
+
 /**
  * Component to select currency from a list of currencies.
  */
 export default defineComponent({
   props: {
-    currency: {
+    modelValue: {
       type: String,
       required: true,
-      validator: v => !!CURRENCY[v]
+      validator: v => CURRENCIES.indexOf(v) !== -1
     }
   },
   emits: ['update:currency'],
   setup() {
     return {
-      t: useI18n().t,
-      currencies: Object.keys(CURRENCY)
+      i18n: useI18n(),
+      currencies: CURRENCIES
     };
   }
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-cloak class="container">
     <div class="row">
       <div class="col converter-block-title text-center text-white">
         <div class="float-right pt-2">
@@ -9,38 +9,29 @@
       </div>
     </div>
 
-    <div v-cloak id="app" class="row py-3 bg-light">
+    <div class="row py-3 bg-light">
       <div class="col-sm-12 col-md-6">
-        <form novalidate="novalidate">
+        <form novalidate="novalidate" autocomplete="off">
 
-          <!-- Reusable components, not dependent on data store. -->
-          <select-currency v-model:currency="currency"/>
-          <select-conversion-direction v-model:direction="direction" :currency="currency"/>
-          <input-amount v-model="amount" :currency="currencyForInput" :direction="direction"
-                        class="mb-0"></input-amount>
+          <!--suppress RequiredAttributes -->
+          <select-currency v-model="currency"/>
+          <!--suppress RequiredAttributes -->
+          <select-conversion-direction v-model="direction" :currency="currency"/>
+          <!--suppress RequiredAttributes -->
+          <input-amount v-model="amount" :currency="currencyForInput" :direction="direction"/>
 
         </form>
       </div>
 
       <div class="col-sm-12 col-md-6 m-auto bg-light">
-        <div class="converter-block-result bg-white text-center px-3 py-3 my-3">
-          <!-- Component reads the data from the store. -->
           <conversion-result :amount="amount" :currency="currency" :direction="direction"/>
-
-          <p v-if="errors.length" class="mb-0 text-danger">
-            {{ $t('message.form_error') }}
-          </p>
-        </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col">
         <p>
-          Example Vue3 TypeScript web application, following this blog post:
-          <a href="https://juur.link/2021/03/vue3-typescript/" target="_blank"
-          >https://juur.link/2021/03/vue3-typescript/</a
-          >
+          Example Vue3 TypeScript web application.
         </p>
       </div>
     </div>
@@ -75,21 +66,15 @@ export default defineComponent({
     /**
      * Determine if we have to show 'USD', 'EUR' or 'BTC'.
      */
-    const currencyForInput = computed<string>(() => {
-      if (direction.value === CONVERT_DIR.FROM_BTC) {
-        return CURRENCY.BTC;
-      } else {
-        return currency.value;
-      }
-    });
+    const currencyForInput
+        = computed<string>(() => direction.value === CONVERT_DIR.FROM_BTC ? CURRENCY.BTC : currency.value);
 
     return {
       title: import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED',
       currency,
       direction,
       amount,
-      currencyForInput,
-      errors: [] /* todo */
+      currencyForInput
     }
   }
 })

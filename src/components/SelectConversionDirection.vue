@@ -1,26 +1,20 @@
 <template>
   <div class="form-group row">
     <legend class="col-form-label col-sm-3 pt-0">
-      {{ t('message.direction') }}
+      {{ i18n.t('message.direction') }}
     </legend>
     <div class="col-sm-9">
       <div v-for="d in directions" :key="d" class="form-check">
-        <!--suppress HtmlFormInputWithoutLabel -->
         <input
-            :id="`direction-${d}`"
-            :checked="d === direction"
-            :value="d"
-            class="form-check-input"
-            name="direction"
             type="radio"
-            @change="$emit('update:direction', $event.target.value)"
+            :value="d"
+            :id="`direction-${d}`"
+            :checked="d === modelValue"
+            class="form-check-input"
+            @change="$emit('update:modelValue', $event.target.value)"
         />
         <label :for="`direction-${d}`" class="form-check-label">
-          {{
-            t(`message.${d}_label`, {
-              currency: t(`message.${currency}_label`)
-            })
-          }}
+          {{ i18n.t(`message.${d}_label`, {currency: i18n.t(`message.${currency}_label`)}) }}
         </label>
 
       </div>
@@ -38,23 +32,23 @@ import {useI18n} from 'vue-i18n';
  */
 export default defineComponent({
   props: {
+    modelValue: {
+      type: String,
+      required: true,
+      /** Test if the enum value is valid. */
+      validator: v => !!CONVERT_DIR[v]
+    },
     currency: {
       type: String,
       required: true,
       /** Test if the enum value is valid. */
       validator: v => !!CURRENCY[v]
-    },
-    direction: {
-      type: String,
-      required: true,
-      /** Test if the enum value is valid. */
-      validator: v => !!CONVERT_DIR[v]
     }
   },
-  emits: ['update:direction'],
+  emits: ['update:modelValue'],
   setup() {
     return {
-      t: useI18n().t,
+      i18n: useI18n(),
       directions: Object.keys(CONVERT_DIR)
     };
   }
