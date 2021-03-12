@@ -39,7 +39,7 @@ $ npm run dev
 
 ## Built With
 
-* [Vue.js](https://vuejs.org) 3.9 - The Progressive JavaScript Framework
+* [Vue.js](https://vuejs.org) 3.0 - The Progressive JavaScript Framework
 * [Vue I18n](https://kazupon.github.io/vue-i18n/) 9.0 - Vue I18n is internationalization plugin for Vue.js
 * [Vue Vite](https://github.com/vitejs/vite/blob/main/docs/guide/index.md) 1.1 - Build tool that aims to provide a faster and leaner development experience
 * [Bootstrap](https://getbootstrap.com) 4.6 – Responsive, mobile-first front-end component library
