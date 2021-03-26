@@ -33,6 +33,11 @@ import {CURRENCY} from '../domain/enums';
 import {useI18n} from 'vue-i18n';
 import {ComputedRef} from '@vue/reactivity';
 
+interface IProps {
+  currency: string;
+  modelValue: number;
+}
+
 /**
  * Component to enter the amount for the exchange.
  */
@@ -42,7 +47,7 @@ export default defineComponent({
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: v => !!CURRENCY[v]
+      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
     },
     modelValue: {
       type: Number,
@@ -50,7 +55,7 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue'],
-  setup(props) {
+  setup(props: Readonly<IProps>, {emit}) {
 
     // For internal use. Contains the exact contents of the input field.
     const modelValue = ref(`${props.modelValue}`);
@@ -60,7 +65,7 @@ export default defineComponent({
      * @param value Input element value to update
      */
     function updateAmount(value: string): void {
-      this.$emit('update:modelValue', isNumeric(value) || 0);
+      emit('update:modelValue', isNumeric(value) || 0);
     }
 
     /**
@@ -75,7 +80,9 @@ export default defineComponent({
     /**
      * Test if given value is valid.
      */
-    const isInvalid: ComputedRef<boolean> = computed(() => !!(modelValue.value && !isNumeric(modelValue.value)));
+    const isInvalid: ComputedRef<boolean> = computed(() => {
+      return !!(modelValue.value && !isNumeric(modelValue.value));
+    });
 
     return {
       i18n: useI18n(),

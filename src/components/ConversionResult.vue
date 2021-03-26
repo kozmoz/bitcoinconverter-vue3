@@ -42,10 +42,10 @@ import {timeFilter} from '../filters/date-filters';
 import {roundFilter} from '../filters/number-filters';
 import {useI18n} from 'vue-i18n';
 
-interface Props {
+interface IProps {
   amount: number,
-  currency: CURRENCY,
-  direction: CONVERT_DIR
+  currency: string,
+  direction: string
 }
 
 /**
@@ -61,16 +61,17 @@ export default defineComponent({
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: v => !!CURRENCY[v]
+      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
     },
     direction: {
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: v => !!CONVERT_DIR[v]
+      validator: (v: string) => Object.keys(CONVERT_DIR).indexOf(v) !== -1
     }
   },
-  setup(props: Props) {
+
+  setup(props: Readonly<IProps>) {
     const loadingStatus = ref<String>(LOADING_STATUS.NOT_LOADING);
     const loadingError = ref<String>();
     const tickerPrice = ref<TickerPrice>();
@@ -78,7 +79,7 @@ export default defineComponent({
     /**
      * Load the ticker prices.
      */
-    async function loadPrices(): void {
+    async function loadPrices(): Promise<void> {
       loadingStatus.value = LOADING_STATUS.LOADING;
       try {
         tickerPrice.value = await TickerService.loadTickerPrice() as TickerPrice;

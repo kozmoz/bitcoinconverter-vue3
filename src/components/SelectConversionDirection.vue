@@ -5,6 +5,7 @@
     </legend>
     <div class="col-sm-9">
       <div v-for="d in directions" :key="d" class="form-check">
+        <!--suppress HtmlFormInputWithoutLabel -->
         <input
             type="radio"
             :value="d"
@@ -36,13 +37,13 @@ export default defineComponent({
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: v => !!CONVERT_DIR[v]
+      validator: (v: string) => Object.keys(CONVERT_DIR).indexOf(v) !== -1
     },
     currency: {
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: v => !!CURRENCY[v]
+      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
     }
   },
   emits: ['update:modelValue'],

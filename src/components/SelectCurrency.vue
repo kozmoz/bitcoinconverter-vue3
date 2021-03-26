@@ -28,7 +28,7 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true,
-      validator: v => CURRENCIES.indexOf(v) !== -1
+      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
     }
   },
   emits: ['update:currency'],
