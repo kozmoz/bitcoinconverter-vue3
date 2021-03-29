@@ -48,11 +48,12 @@ $ npm run dev
 
 All variants of this Bitcoin converter application, sorted from new to old:
 
-* Vue.js - part 2 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right-part-2/) [src](https://github.com/kozmoz/bitcoinconverter-vue) [demo](http://sandbox.juurlink.org/vuejs-part-2/)
-* Vue.js - part 1 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right/) [src](https://github.com/kozmoz/bitcoinconverter-vue/tree/without-single-file-components) [demo](http://sandbox.juurlink.org/vuejs/)
-* Angular Bitcoin converter application [blog] [src](https://github.com/kozmoz/bitcoinconverter-angular2) [demo](http://sandbox.juurlink.org/angularjs2/)
-* AngularJS Bitcoin converter application [blog](https://juur.link/2013/05/angularjs/) [src](https://github.com/kozmoz/bitcoinconverter-angular1) [demo](http://sandbox.juurlink.org/angularjs/)
-* Backbone Bitcoin converter application [blog](https://juur.link/2013/10/backbone-js-introductie/) [src](https://github.com/kozmoz/bitcoinconverter-backbone) [demo](http://sandbox.juurlink.org/backbone/)
+* 2021 - Vue 3 TypeScript Bitcoin converter application [blog](https://juur.link/2021/03/vue-3-typescript-edition/) [src](https://github.com/kozmoz/bitcoinconverter-vue3) [demo](https://sandbox.juurlink.org/vue3/)
+* 2020 - Vue.js - part 2 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right-part-2/) [src](https://github.com/kozmoz/bitcoinconverter-vue) [demo](http://sandbox.juurlink.org/vuejs-part-2/)
+* 2019 - Vue.js - part 1 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right/) [src](https://github.com/kozmoz/bitcoinconverter-vue/tree/without-single-file-components) [demo](http://sandbox.juurlink.org/vuejs/)
+* 2017 - Angular Bitcoin converter application [blog] [src](https://github.com/kozmoz/bitcoinconverter-angular2) [demo](http://sandbox.juurlink.org/angularjs2/)
+* 2013 - AngularJS Bitcoin converter application [blog](https://juur.link/2013/05/angularjs/) [src](https://github.com/kozmoz/bitcoinconverter-angular1) [demo](http://sandbox.juurlink.org/angularjs/)
+* 2013 - Backbone Bitcoin converter application [blog](https://juur.link/2013/10/backbone-js-introductie/) [src](https://github.com/kozmoz/bitcoinconverter-backbone) [demo](http://sandbox.juurlink.org/backbone/)
 
 ---
 
