@@ -25,6 +25,7 @@
 
 </script>
 
+
 <template>
   <div v-cloak class="container">
     <div class="row">
