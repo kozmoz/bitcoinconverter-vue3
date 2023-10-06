@@ -82,11 +82,11 @@ export default defineComponent({
     async function loadPrices(): Promise<void> {
       loadingStatus.value = LOADING_STATUS.LOADING;
       try {
-        tickerPrice.value = await TickerService.loadTickerPrice() as TickerPrice;
+        tickerPrice.value = await TickerService.fetchCoinDeskCurrentPrice();
         loadingError.value = '';
         loadingStatus.value = LOADING_STATUS.NOT_LOADING;
       } catch (error) {
-        loadingError.value = error;
+        loadingError.value = `${error}`;
         loadingStatus.value = LOADING_STATUS.ERROR;
       }
     }

@@ -9,13 +9,13 @@
 
         <!--suppress JSUnresolvedVariable -->
         <input
-            id="amount"
-            type="text"
-            v-model="modelValue"
-            maxlength="10"
-            class="form-control"
-            :class="{ 'is-invalid': isInvalid}"
-            @input="updateAmount($event.target.value)"
+          id="amount"
+          type="text"
+          v-model="modelValue"
+          maxlength="10"
+          class="form-control"
+          :class="{ 'is-invalid': isInvalid}"
+          @input="updateAmount($event.target.value)"
         />
 
         <div v-if="isInvalid" class="invalid-feedback">
@@ -34,7 +34,7 @@ import {useI18n} from 'vue-i18n';
 import {ComputedRef} from '@vue/reactivity';
 
 interface IProps {
-  currency: string;
+  currency: CURRENCY;
   modelValue: number;
 }
 
@@ -47,7 +47,7 @@ export default defineComponent({
       type: String,
       required: true,
       /** Test if the enum value is valid. */
-      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
+      validator: (v: string) => Object.keys(CURRENCY).includes(v)
     },
     modelValue: {
       type: Number,

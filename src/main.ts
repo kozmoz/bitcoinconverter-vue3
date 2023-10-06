@@ -10,7 +10,6 @@ const i18n = createI18n({
     messages
 })
 
-const app = createApp(App);
-
-app.use(i18n);
-app.mount('#app')
+createApp(App)
+  .use(i18n)
+  .mount('#app');

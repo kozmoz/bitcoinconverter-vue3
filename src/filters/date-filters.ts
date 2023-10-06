@@ -5,8 +5,12 @@
  * @return The time in HH:mm format or empty string
  */
 export function timeFilter(date: Date): string {
-    if (!date) {
-        return '';
-    }
-    return ('00' + date.getHours()).substr(-2) + ':' + ('00' + date.getMinutes()).substr(-2);
+  // Show the time as HH:mm from Date object.
+  return date ? date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
+}
+
+export function dateFilter(date: Date): string {
+  // Show the date as YYYY-MM-DD from Date object.
+  return date ? date.toLocaleDateString([], {year: 'numeric', month: '2-digit', day: '2-digit'}) : '';
+
 }
