@@ -39,7 +39,7 @@
 
     <div class="row py-3 bg-light">
       <div class="col-sm-12 col-md-6">
-        <form novalidate="novalidate" autocomplete="off">
+        <form novalidate autocomplete="off">
 
           <!--suppress RequiredAttributes -->
           <select-currency v-model="currency"/>
