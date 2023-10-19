@@ -1,27 +1,27 @@
 <script lang="ts" setup>
-  import { ref } from 'vue'
-  import {CONVERT_DIR, CURRENCY} from './domain/enums';
-  import {computed} from '@vue/runtime-core';
+import {ref} from 'vue'
+import {CONVERT_DIR, CURRENCY} from './domain/enums';
+import {computed} from '@vue/runtime-core';
 
-  import ConversionResult from './components/ConversionResult.vue';
-  import InputAmount from './components/InputAmount.vue';
-  import SelectConversionDirection from './components/SelectConversionDirection.vue';
-  import SelectCurrency from './components/SelectCurrency.vue';
-  import SelectLanguage from './components/SelectLanguage.vue';
-  import 'bootstrap/dist/css/bootstrap.min.css';
+import ConversionResult from './components/ConversionResult.vue';
+import InputAmount from './components/InputAmount.vue';
+import SelectConversionDirection from './components/SelectConversionDirection.vue';
+import SelectCurrency from './components/SelectCurrency.vue';
+import SelectLanguage from './components/SelectLanguage.vue';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  // Set defaults.
-  const currency = ref(CURRENCY.EUR);
-  const direction = ref(CONVERT_DIR.FROM_BTC);
-  const amount = ref(1);
+// Set defaults.
+const currency = ref(CURRENCY.EUR);
+const direction = ref(CONVERT_DIR.FROM_BTC);
+const amount = ref(1);
 
-  /**
-   * Determine if we have to show 'USD', 'EUR' or 'BTC'.
-   */
-  const currencyForInput
-    = computed<string>(() => direction.value === CONVERT_DIR.FROM_BTC ? CURRENCY.BTC : currency.value);
+/**
+ * Determine if we have to show 'USD', 'EUR' or 'BTC'.
+ */
+const currencyForInput
+  = computed<string>(() => direction.value === CONVERT_DIR.FROM_BTC ? CURRENCY.BTC : currency.value);
 
-  const title = import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED';
+const title = import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED';
 
 </script>
 
@@ -91,8 +91,4 @@ a {
   background: linear-gradient(to bottom, #184791 0%, #00256f 100%);
 }
 
-.converter-block-result {
-  border: 3px solid #00256f;
-  border-radius: 10px;
-}
 </style>

@@ -3,10 +3,10 @@
     <div v-if="tickerPrice">
       <h3>
         <template v-if="direction === CONVERT_DIR.TO_BTC">
-          {{ i18n.t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5) }} BTC
+          {{ i18n.t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5, i18n.locale.value) }} BTC
         </template>
         <template v-else>
-          {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2) }}
+          {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2, i18n.locale.value) }}
           {{ i18n.t(`message.${currency}_sign`) }}
         </template>
       </h3>
@@ -16,9 +16,9 @@
       <p class="mb-0">
         <small class="text-muted">
           {{ i18n.t('message.rate_update_time') }}
-          {{ timeFilter(tickerPrice.updated) }}, 1 BTC =
+          {{ timeFilter(tickerPrice.updated) }} {{ dateFilter(tickerPrice.updated, i18n.locale.value) }}, 1 BTC =
           {{ i18n.t(`message.${currency}_sign`) }}
-          {{ roundFilter(tickerPrice[`rate${currency}`], 2) }} (buy)
+          {{ roundFilter(tickerPriceActiveCurrency, 2, i18n.locale.value) }} (buy)
         </small>
       </p>
     </div>
@@ -38,7 +38,7 @@ import {computed, defineComponent, onMounted, onUnmounted, ref} from '@vue/runti
 import {ComputedRef} from '@vue/reactivity';
 import {TickerPrice, TickerService} from '../services/TickerService';
 import {CONVERT_DIR, CURRENCY, LOADING_STATUS} from '../domain/enums';
-import {timeFilter} from '../filters/date-filters';
+import {dateFilter, timeFilter} from '../filters/date-filters';
 import {roundFilter} from '../filters/number-filters';
 import {useI18n} from 'vue-i18n';
 
@@ -52,6 +52,7 @@ interface IProps {
  * Component to calculate the final exchange rate.
  */
 export default defineComponent({
+  methods: {dateFilter},
   props: {
     amount: {
       type: Number,
@@ -104,14 +105,21 @@ export default defineComponent({
      * Calculate new price when something changes.
      */
     const calculatedResult: ComputedRef<number> = computed(() => {
-      if (!props.amount || !tickerPrice || !tickerPrice.value) {
+      if (!props.amount || !tickerPriceActiveCurrency.value) {
         return 0;
       }
-      const price = tickerPrice.value as TickerPrice;
-      if (props.direction === CONVERT_DIR.FROM_BTC) {
-        return props.currency === CURRENCY.EUR ? props.amount * price.rateEUR : props.amount * price.rateUSD;
+      return props.direction === CONVERT_DIR.FROM_BTC ?
+        props.amount * tickerPriceActiveCurrency.value : props.amount / tickerPriceActiveCurrency.value;
+    });
+
+    /**
+     * Determine the ticker price for the active currency.
+     */
+    const tickerPriceActiveCurrency: ComputedRef<number> = computed(() => {
+      if (!tickerPrice.value) {
+        return 0;
       }
-      return props.currency === CURRENCY.EUR ? props.amount / price.rateEUR : props.amount / price.rateUSD;
+      return props.currency === CURRENCY.EUR ? tickerPrice.value.rateEUR : tickerPrice.value.rateUSD;
     });
 
     return {
@@ -120,6 +128,7 @@ export default defineComponent({
       loadingError,
       tickerPrice,
       calculatedResult,
+      tickerPriceActiveCurrency,
       // Filters.
       timeFilter,
       roundFilter,
@@ -132,8 +141,6 @@ export default defineComponent({
 
 </script>
 
-<!-- Add "scoped" atribute to limit CSS to this component only -->
-<!--suppress CssInvalidHtmlTagReference -->
 <style scoped>
 
 ul {
@@ -145,4 +152,10 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
+
+.converter-block-result {
+  border: 3px solid #00256f;
+  border-radius: 10px;
+}
+
 </style>
