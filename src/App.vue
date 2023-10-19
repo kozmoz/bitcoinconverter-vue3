@@ -25,6 +25,7 @@ const title = import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED';
 
 </script>
 
+
 <template>
   <div v-cloak class="container">
     <div class="row">
@@ -38,7 +39,7 @@ const title = import.meta.env.VITE_APP_TITLE || 'NO TITLE CONFIGURED';
 
     <div class="row py-3 bg-light">
       <div class="col-sm-12 col-md-6">
-        <form novalidate="novalidate" autocomplete="off">
+        <form novalidate autocomplete="off">
 
           <!--suppress RequiredAttributes -->
           <select-currency v-model="currency"/>
