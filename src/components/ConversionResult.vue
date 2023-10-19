@@ -1,3 +1,88 @@
+<script lang="ts" setup>
+import {computed, onMounted, onUnmounted, ref} from '@vue/runtime-core';
+import {CONVERT_DIR, CURRENCY, LOADING_STATUS} from '../domain/enums';
+import {TickerPrice, TickerService} from '../services/TickerService';
+import {ComputedRef} from '@vue/reactivity';
+import {useI18n} from 'vue-i18n';
+import {dateFilter, timeFilter} from '../filters/date-filters';
+import {roundFilter} from '../filters/number-filters';
+
+const props = defineProps<{
+  amount: number,
+  currency: string,
+  direction: string;
+}>();
+
+// Props validation.
+if (!props.amount && props.amount !== 0) {
+  throw new Error('amount is required');
+}
+if (!props.currency) {
+  throw new Error('currency is required');
+}
+if (!props.direction) {
+  throw new Error('direction is required');
+}
+if (!Object.keys(CURRENCY).includes(props.currency)) {
+  throw new Error(`currency must be one of ${Object.keys(CURRENCY).join(', ')}`);
+}
+if (!Object.keys(CONVERT_DIR).includes(props.direction)) {
+  throw new Error(`direction must be one of ${Object.keys(CONVERT_DIR).join(', ')}`);
+}
+
+const loadingStatus = ref<String>(LOADING_STATUS.NOT_LOADING);
+const loadingError = ref<String>();
+const tickerPrice = ref<TickerPrice>();
+
+/**
+ * Load the ticker prices.
+ */
+async function loadPrices(): Promise<void> {
+  loadingStatus.value = LOADING_STATUS.LOADING;
+  try {
+    tickerPrice.value = await TickerService.fetchCoinDeskCurrentPrice();
+    loadingError.value = '';
+    loadingStatus.value = LOADING_STATUS.NOT_LOADING;
+  } catch (error) {
+    loadingError.value = `${error}`;
+    loadingStatus.value = LOADING_STATUS.ERROR;
+  }
+}
+
+/**
+ * Update the BTC price on interval.
+ */
+onMounted((): void => {
+  loadPrices();
+  const cancelId = setInterval(loadPrices, 60000 /* One minute. */);
+  onUnmounted(() => clearInterval(cancelId));
+});
+
+/**
+ * Calculate new price when something changes.
+ */
+const calculatedResult: ComputedRef<number> = computed(() => {
+  if (!props.amount || !tickerPriceActiveCurrency.value) {
+    return 0;
+  }
+  return props.direction === CONVERT_DIR.FROM_BTC ?
+    props.amount * tickerPriceActiveCurrency.value : props.amount / tickerPriceActiveCurrency.value;
+});
+
+/**
+ * Determine the ticker price for the active currency.
+ */
+const tickerPriceActiveCurrency: ComputedRef<number> = computed(() => {
+  if (!tickerPrice.value) {
+    return 0;
+  }
+  return props.currency === CURRENCY.EUR ? tickerPrice.value.rateEUR : tickerPrice.value.rateUSD;
+});
+
+const i18n = useI18n();
+
+</script>
+
 <template>
   <div class="converter-block-result bg-white text-center px-3 py-3 my-3">
     <div v-if="tickerPrice">
@@ -32,114 +117,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import {computed, defineComponent, onMounted, onUnmounted, ref} from '@vue/runtime-core';
-import {ComputedRef} from '@vue/reactivity';
-import {TickerPrice, TickerService} from '../services/TickerService';
-import {CONVERT_DIR, CURRENCY, LOADING_STATUS} from '../domain/enums';
-import {dateFilter, timeFilter} from '../filters/date-filters';
-import {roundFilter} from '../filters/number-filters';
-import {useI18n} from 'vue-i18n';
-
-interface IProps {
-  amount: number,
-  currency: string,
-  direction: string
-}
-
-/**
- * Component to calculate the final exchange rate.
- */
-export default defineComponent({
-  methods: {dateFilter},
-  props: {
-    amount: {
-      type: Number,
-      required: true
-    },
-    currency: {
-      type: String,
-      required: true,
-      /** Test if the enum value is valid. */
-      validator: (v: string) => Object.keys(CURRENCY).indexOf(v) !== -1
-    },
-    direction: {
-      type: String,
-      required: true,
-      /** Test if the enum value is valid. */
-      validator: (v: string) => Object.keys(CONVERT_DIR).indexOf(v) !== -1
-    }
-  },
-
-  setup(props: Readonly<IProps>) {
-    const loadingStatus = ref<String>(LOADING_STATUS.NOT_LOADING);
-    const loadingError = ref<String>();
-    const tickerPrice = ref<TickerPrice>();
-
-    /**
-     * Load the ticker prices.
-     */
-    async function loadPrices(): Promise<void> {
-      loadingStatus.value = LOADING_STATUS.LOADING;
-      try {
-        tickerPrice.value = await TickerService.fetchCoinDeskCurrentPrice();
-        loadingError.value = '';
-        loadingStatus.value = LOADING_STATUS.NOT_LOADING;
-      } catch (error) {
-        loadingError.value = `${error}`;
-        loadingStatus.value = LOADING_STATUS.ERROR;
-      }
-    }
-
-    /**
-     * Update the BTC price on interval.
-     */
-    onMounted((): void => {
-      loadPrices();
-      const cancelId = setInterval(loadPrices, 60000 /* One minute. */);
-      onUnmounted(() => clearInterval(cancelId));
-    });
-
-    /**
-     * Calculate new price when something changes.
-     */
-    const calculatedResult: ComputedRef<number> = computed(() => {
-      if (!props.amount || !tickerPriceActiveCurrency.value) {
-        return 0;
-      }
-      return props.direction === CONVERT_DIR.FROM_BTC ?
-        props.amount * tickerPriceActiveCurrency.value : props.amount / tickerPriceActiveCurrency.value;
-    });
-
-    /**
-     * Determine the ticker price for the active currency.
-     */
-    const tickerPriceActiveCurrency: ComputedRef<number> = computed(() => {
-      if (!tickerPrice.value) {
-        return 0;
-      }
-      return props.currency === CURRENCY.EUR ? tickerPrice.value.rateEUR : tickerPrice.value.rateUSD;
-    });
-
-    return {
-      i18n: useI18n(),
-      loadingStatus,
-      loadingError,
-      tickerPrice,
-      calculatedResult,
-      tickerPriceActiveCurrency,
-      // Filters.
-      timeFilter,
-      roundFilter,
-      // Enums.
-      CONVERT_DIR,
-      LOADING_STATUS
-    }
-  }
-})
-
-</script>
 
 <style scoped>
 
