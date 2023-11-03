@@ -1,6 +1,3 @@
-// @ts-ignore
-import axios, {AxiosResponse} from 'axios';
-
 // noinspection SpellCheckingInspection
 const API_COINDESK_CURRENT_PRICE = 'https://api.coindesk.com/v1/bpi/currentprice.json';
 
