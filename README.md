@@ -6,7 +6,6 @@ The following tools/frameworks are used:
 
 * **Vue.js** - frontend framework
 * **Bootstrap** - for styling
-* **Axios** - HTTP client
 
 ## Getting Started
 
@@ -43,7 +42,6 @@ $ npm run dev
 * [Vue I18n](https://kazupon.github.io/vue-i18n/) 9.0 - Vue I18n is internationalization plugin for Vue.js
 * [Vue Vite](https://github.com/vitejs/vite/blob/main/docs/guide/index.md) 1.1 - Build tool that aims to provide a faster and leaner development experience
 * [Bootstrap](https://getbootstrap.com) 4.6 – Responsive, mobile-first front-end component library
-* [Axios](https://github.com/axios/axios) 0.21 - Promise based HTTP client for the browser and node.js
 * [Coindesk API](https://www.coindesk.com/api) - CoinDesk Bitcoin Price Index API
 
 All variants of this Bitcoin converter application, sorted from new to old:
