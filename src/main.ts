@@ -4,6 +4,8 @@ import App from './App.vue';
 import messages from './i18n/messages';
 
 const i18n = createI18n({
+    // you must set `false`, to use Composition API.
+    // https://vue-i18n.intlify.dev/guide/advanced/composition.html
     legacy: false,
     locale: 'en',
     fallbackLocale: 'en',

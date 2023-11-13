@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 
-import {useI18n} from 'vue-i18n';
 import {CONVERT_DIR, CURRENCY} from '../domain/enums';
 
 const props = defineProps<{
@@ -25,15 +24,13 @@ if (!Object.keys(CONVERT_DIR).includes(props.modelValue)) {
 
 const directions = Object.keys(CONVERT_DIR);
 
-const i18n = useI18n();
-
 </script>
 
 <template>
   <div class="form-group row">
     <!--suppress HtmlUnknownTag -->
     <legend class="col-form-label col-sm-3 pt-0">
-      {{ i18n.t('message.direction') }}
+      {{ $t('message.direction') }}
     </legend>
     <div class="col-sm-9">
       <div v-for="d in directions" :key="d" class="form-check">
@@ -46,8 +43,9 @@ const i18n = useI18n();
           class="form-check-input"
           @change="$emit('update:modelValue', d)"
         />
+        <!--suppress TypeScriptValidateTypes -->
         <label :for="`direction-${d}`" class="form-check-label">
-          {{ i18n.t(`message.${d}_label`, {currency: i18n.t(`message.${currency}_label`)}) }}
+          {{ $t(`message.${d}_label`, {currency: $t(`message.${currency}_label`)}) }}
         </label>
 
       </div>

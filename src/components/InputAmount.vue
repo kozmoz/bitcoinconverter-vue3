@@ -3,7 +3,6 @@
 import {CURRENCY} from '../domain/enums';
 import {computed, ref} from '@vue/runtime-core';
 import {ComputedRef} from '@vue/reactivity';
-import {useI18n} from 'vue-i18n';
 
 const props = defineProps<{
   currency: string,
@@ -49,17 +48,15 @@ const isInvalid: ComputedRef<boolean> = computed(() => {
   return !!(modelValue.value && !isNumeric(modelValue.value));
 });
 
-const i18n = useI18n();
-
 </script>
 
 <template>
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label" for="amount">{{ i18n.t('message.amount') }}</label>
+    <label class="col-sm-3 col-form-label" for="amount">{{ $t('message.amount') }}</label>
     <div class="col-sm-9">
       <div class="input-group w-75">
         <div class="input-group-prepend">
-          <span class="input-group-text">{{ i18n.t(`message.${currency}_sign`) }}</span>
+          <span class="input-group-text">{{ $t(`message.${currency}_sign`) }}</span>
         </div>
 
         <!--suppress JSUnresolvedVariable -->
@@ -74,10 +71,10 @@ const i18n = useI18n();
         />
 
         <div v-if="isInvalid" class="invalid-feedback">
-          {{ i18n.t('message.amount_error') }}
+          {{ $t('message.amount_error') }}
         </div>
       </div>
-      <small class="form-text text-muted">{{ i18n.t('message.inputamount-formtext-integer') }}</small>
+      <small class="form-text text-muted">{{ $t('message.inputamount-formtext-integer') }}</small>
     </div>
   </div>
 </template>
