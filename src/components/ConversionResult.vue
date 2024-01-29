@@ -79,7 +79,7 @@ const tickerPriceActiveCurrency: ComputedRef<number> = computed(() => {
   return props.currency === CURRENCY.EUR ? tickerPrice.value.rateEUR : tickerPrice.value.rateUSD;
 });
 
-const i18n = useI18n();
+const {locale} = useI18n();
 
 </script>
 
@@ -88,22 +88,22 @@ const i18n = useI18n();
     <div v-if="tickerPrice">
       <h3>
         <template v-if="direction === CONVERT_DIR.TO_BTC">
-          {{ i18n.t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5, i18n.locale.value) }} BTC
+          {{ $t(`message.${currency}_sign`) }} {{ amount || 0 }} = {{ roundFilter(calculatedResult, 5, locale) }} BTC
         </template>
         <template v-else>
-          {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2, i18n.locale.value) }}
-          {{ i18n.t(`message.${currency}_sign`) }}
+          {{ amount || 0 }} BTC = {{ roundFilter(calculatedResult, 2, locale) }}
+          {{ $t(`message.${currency}_sign`) }}
         </template>
       </h3>
       <p class="mb-0">
-        <small class="text-muted">{{ i18n.t('message.rate_updated') }}</small>
+        <small class="text-muted">{{ $t('message.rate_updated') }}</small>
       </p>
       <p class="mb-0">
         <small class="text-muted">
-          {{ i18n.t('message.rate_update_time') }}
-          {{ timeFilter(tickerPrice.updated) }} {{ dateFilter(tickerPrice.updated, i18n.locale.value) }}, 1 BTC =
-          {{ i18n.t(`message.${currency}_sign`) }}
-          {{ roundFilter(tickerPriceActiveCurrency, 2, i18n.locale.value) }} (buy)
+          {{ $t('message.rate_update_time') }}
+          {{ timeFilter(tickerPrice.updated) }} {{ dateFilter(tickerPrice.updated, locale) }}, 1 BTC =
+          {{ $t(`message.${currency}_sign`) }}
+          {{ roundFilter(tickerPriceActiveCurrency, 2, locale) }} (buy)
         </small>
       </p>
     </div>

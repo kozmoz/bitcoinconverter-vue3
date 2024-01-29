@@ -6,7 +6,6 @@ The following tools/frameworks are used:
 
 * **Vue.js** - frontend framework
 * **Bootstrap** - for styling
-* **Axios** - HTTP client
 
 ## Getting Started
 
@@ -43,11 +42,11 @@ $ npm run dev
 * [Vue I18n](https://kazupon.github.io/vue-i18n/) 9.0 - Vue I18n is internationalization plugin for Vue.js
 * [Vue Vite](https://github.com/vitejs/vite/blob/main/docs/guide/index.md) 1.1 - Build tool that aims to provide a faster and leaner development experience
 * [Bootstrap](https://getbootstrap.com) 4.6 – Responsive, mobile-first front-end component library
-* [Axios](https://github.com/axios/axios) 0.21 - Promise based HTTP client for the browser and node.js
 * [Coindesk API](https://www.coindesk.com/api) - CoinDesk Bitcoin Price Index API
 
 All variants of this Bitcoin converter application, sorted from new to old:
 
+* 2023 - React TypeScript Bitcoin converter application [src](https://github.com/kozmoz/bitcoinconverter-react)
 * 2021 - Vue 3 TypeScript Bitcoin converter application [blog](https://juur.link/2021/03/vue-3-typescript-edition/) [src](https://github.com/kozmoz/bitcoinconverter-vue3) [demo](https://sandbox.juurlink.org/vue3/)
 * 2020 - Vue.js - part 2 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right-part-2/) [src](https://github.com/kozmoz/bitcoinconverter-vue) [demo](http://sandbox.juurlink.org/vuejs-part-2/)
 * 2019 - Vue.js - part 1 - Bitcoin converter application [blog](https://juur.link/2019/01/vue-js-angularjs-done-right/) [src](https://github.com/kozmoz/bitcoinconverter-vue/tree/without-single-file-components) [demo](http://sandbox.juurlink.org/vuejs/)
