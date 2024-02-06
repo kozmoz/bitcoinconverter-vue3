@@ -37,6 +37,7 @@ const directions = Object.keys(CONVERT_DIR);
         <!--suppress HtmlFormInputWithoutLabel -->
         <input
           type="radio"
+          name="direction"
           :value="d"
           :id="`direction-${d}`"
           :checked="d === modelValue"
